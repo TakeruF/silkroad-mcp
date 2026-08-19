@@ -28,6 +28,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          SITE_BASE: /silkroad-mcp
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site/dist
