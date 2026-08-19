@@ -1,0 +1,12 @@
+{
+  "name": "China Rail MCP", "id": "china-rail", "category": "public-data", "status": "experimental",
+  "source": { "visibility": "public", "repository": "TakeruF/china-rail-mcp", "blueprint": null },
+  "implementation": { "language": ["TypeScript"], "components": ["MCP server", "public-data provider", "fixture-backed tests"] },
+  "protocol": { "transports": ["stdio", "unauthenticated HTTPS upstream"] },
+  "service": { "official_api": false, "mechanism": ["unauthenticated public 12306 endpoints", "no login or anti-bot bypass"] },
+  "auth": { "type": ["none"], "notes": "No upstream account credentials are used." },
+  "capabilities": { "read": true, "write": false, "confirmation_required": false },
+  "risk": { "level": "medium", "destructive_actions": [], "notes": "Upstream formats and availability can change; no ticket purchase or booking is attempted." },
+  "tools": ["search_stations", "search_trains", "get_train_details", "get_availability", "compare_trains"],
+  "i18n": { "en": { "summary": "Search China Railway stations, trains, fares, and seat availability.", "description": "A public-data MCP server for planning rail journeys without login, booking, or anti-bot bypass.", "limitations": "Upstream public endpoints may change. It never purchases or books tickets." }, "zh": { "summary": "查询中国铁路车站、车次、票价和余票信息。", "description": "面向行程规划的公共数据 MCP 服务器，不需要登录，不提供购票或绕过反爬的功能。", "limitations": "上游公开接口可能变更；本项目不购买或预订车票。" } }
+}

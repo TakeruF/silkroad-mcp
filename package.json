@@ -1,0 +1,16 @@
+{
+  "name": "silkroad-mcp",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Catalog, blueprints, and templates for independently maintained MCP projects.",
+  "scripts": {
+    "validate:catalog": "node scripts/validate-catalog.mjs",
+    "generate": "node scripts/generate.mjs",
+    "build": "npm run validate:catalog && npm run generate",
+    "check:generated": "npm run generate && git diff --exit-code -- README.md",
+    "check:links": "node scripts/check-links.mjs",
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "test": "npm run build && npm run check:links && npm run check:secrets"
+  },
+  "engines": { "node": ">=20" }
+}

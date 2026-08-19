@@ -1,0 +1,20 @@
+[
+  {
+    "id": "secure-mail-mcp",
+    "path": "blueprints/secure-mail-mcp",
+    "relatedProjects": ["icloud-mail", "qq-mail"],
+    "i18n": {
+      "en": { "name": "Secure Mail MCP", "summary": "A provider-neutral blueprint for building safety-first mail MCP servers.", "solves": "It separates mail-provider adapters from MCP policy and confirmation boundaries.", "architecture": "MCP server, provider interface, IMAP/SMTP adapters, and an explicit confirmation gate.", "included": "Threat model, environment example, test plan, and implementation guidance.", "excluded": "Private production code, credentials, deployment OAuth configuration, and provider account data.", "security": "Read operations are conservative; sending and mutations require explicit confirmation.", "uses": "Building an account-scoped IMAP/SMTP MCP server." },
+      "zh": { "name": "安全邮件 MCP", "summary": "用于构建安全优先邮件 MCP 服务器的、与提供商无关的蓝图。", "solves": "将邮件提供商适配器与 MCP 策略及确认边界分离。", "architecture": "MCP 服务器、提供商接口、IMAP/SMTP 适配器和明确的确认门。", "included": "威胁模型、环境变量示例、测试计划和实现指南。", "excluded": "私有生产代码、凭据、部署 OAuth 配置和提供商账户数据。", "security": "读取操作保持保守；发送和变更必须明确确认。", "uses": "构建账户范围内的 IMAP/SMTP MCP 服务器。" }
+    }
+  },
+  {
+    "id": "device-bridge",
+    "path": "blueprints/device-bridge",
+    "relatedProjects": ["coloros-calendar"],
+    "i18n": {
+      "en": { "name": "Device Bridge", "summary": "A blueprint for permission-aware MCP bridges to local device data.", "solves": "It defines a boundary between an AI-facing MCP server and privileged device APIs.", "architecture": "MCP transport, device-bound relay, permissioned platform adapter, and audit-friendly mutation policy.", "included": "Boundary model, transport guidance, and safety constraints.", "excluded": "Production device relay code, user data, and device credentials.", "security": "Device permissions are explicit; destructive operations need confirmation and safe defaults.", "uses": "Connecting AI to calendar, sensor, or platform data through a local bridge." },
+      "zh": { "name": "设备桥接", "summary": "用于连接本地设备数据的、具备权限意识的 MCP 桥接蓝图。", "solves": "定义面向 AI 的 MCP 服务器与特权设备 API 之间的边界。", "architecture": "MCP 传输、设备绑定中继、受权限保护的平台适配器和便于审计的变更策略。", "included": "边界模型、传输指南和安全约束。", "excluded": "生产设备中继代码、用户数据和设备凭据。", "security": "设备权限必须明确；破坏性操作需要确认并采用安全默认值。", "uses": "通过本地桥接将 AI 连接到日历、传感器或平台数据。" }
+    }
+  }
+]

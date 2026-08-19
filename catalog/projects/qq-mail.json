@@ -1,0 +1,12 @@
+{
+  "name": "QQ Mail MCP", "id": "qq-mail", "category": "mail", "status": "beta",
+  "source": { "visibility": "private", "repository": "TakeruF/qq-mail-mcp", "blueprint": "blueprints/secure-mail-mcp" },
+  "implementation": { "language": ["TypeScript"], "components": ["MCP server", "provider interface", "QQ IMAP/SMTP provider", "HTTP adapter"] },
+  "protocol": { "transports": ["stdio", "Streamable HTTP", "IMAP over TLS", "SMTP over TLS"] },
+  "service": { "official_api": false, "mechanism": ["standards-based IMAP/SMTP", "QQ Mail authorization code"] },
+  "auth": { "type": ["mail authorization code", "deployment OAuth"], "notes": "Host and deployment configuration are account-specific." },
+  "capabilities": { "read": true, "write": true, "confirmation_required": true },
+  "risk": { "level": "high", "destructive_actions": ["send", "archive", "Trash", "mark read", "draft mutation"], "notes": "Trash is recoverable; permanent deletion is not exposed." },
+  "tools": ["search_mail", "get_message", "read_attachment", "send_mail"],
+  "i18n": { "en": { "summary": "A private QQ Mail MCP implementation built on a reusable secure-mail design.", "description": "A provider-specific mail implementation with a public blueprint for the security and provider-boundary model.", "limitations": "Host and deployment configuration are account-specific; permanent deletion is not exposed." }, "zh": { "summary": "基于可复用安全邮件设计的私有 QQ Mail MCP 实现。", "description": "这是一个针对提供商的邮件实现，并公开安全与提供商边界设计蓝图。", "limitations": "主机和部署配置因账户而异；不提供永久删除。" } }
+}

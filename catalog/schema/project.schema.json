@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Silkroad MCP project record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "id", "category", "status", "source", "implementation", "protocol", "service", "auth", "capabilities", "risk", "tools", "i18n"],
+  "properties": {
+    "name": { "type": "string", "minLength": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "category": { "enum": ["mail", "public-data", "device-bridge"] },
+    "status": { "enum": ["stable", "beta", "experimental", "planned", "archived"] },
+    "source": { "type": "object", "additionalProperties": false, "required": ["visibility", "repository", "blueprint"], "properties": { "visibility": { "enum": ["public", "private", "mixed"] }, "repository": { "type": "string", "minLength": 1 }, "blueprint": { "type": ["string", "null"] } } },
+    "implementation": { "type": "object", "additionalProperties": false, "required": ["language", "components"], "properties": { "language": { "type": "array", "minItems": 1, "items": { "type": "string" } }, "components": { "type": "array", "minItems": 1, "items": { "type": "string" } } } },
+    "protocol": { "type": "object", "additionalProperties": false, "required": ["transports"], "properties": { "transports": { "type": "array", "minItems": 1, "items": { "type": "string" } } } },
+    "service": { "type": "object", "additionalProperties": false, "required": ["official_api", "mechanism"], "properties": { "official_api": { "type": "boolean" }, "mechanism": { "type": "array", "minItems": 1, "items": { "type": "string" } } } },
+    "auth": { "type": "object", "additionalProperties": false, "required": ["type", "notes"], "properties": { "type": { "type": "array", "minItems": 1, "items": { "type": "string" } }, "notes": { "type": "string" } } },
+    "capabilities": { "type": "object", "additionalProperties": false, "required": ["read", "write", "confirmation_required"], "properties": { "read": { "type": "boolean" }, "write": { "type": "boolean" }, "confirmation_required": { "type": "boolean" } } },
+    "risk": { "type": "object", "additionalProperties": false, "required": ["level", "destructive_actions", "notes"], "properties": { "level": { "enum": ["low", "medium", "high"] }, "destructive_actions": { "type": "array", "items": { "type": "string" } }, "notes": { "type": "string" } } }
+    ,"tools": { "type": "array", "items": { "type": "string" } },
+    "i18n": { "type": "object", "additionalProperties": false, "required": ["en", "zh"], "properties": { "en": { "$ref": "#/$defs/localized" }, "zh": { "$ref": "#/$defs/localized" } } }
+  },
+  "$defs": {
+    "localized": { "type": "object", "additionalProperties": false, "required": ["summary", "description", "limitations"], "properties": { "summary": { "type": "string", "minLength": 1 }, "description": { "type": "string", "minLength": 1 }, "limitations": { "type": "string", "minLength": 1 } } }
+  }
+}

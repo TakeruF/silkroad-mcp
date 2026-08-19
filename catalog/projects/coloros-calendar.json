@@ -1,0 +1,12 @@
+{
+  "name": "ColorOS Calendar Bridge", "id": "coloros-calendar", "category": "device-bridge", "status": "experimental",
+  "source": { "visibility": "private", "repository": "TakeruF/coloros-calendar-bridge", "blueprint": "blueprints/device-bridge" },
+  "implementation": { "language": ["Kotlin", "TypeScript"], "components": ["Android app", "CalendarContract data source", "mock MCP server", "future authenticated device relay"] },
+  "protocol": { "transports": ["Android CalendarContract", "Streamable HTTP MCP", "CalDAV"] },
+  "service": { "official_api": true, "mechanism": ["Android CalendarContract", "standards-based CalDAV", "mock bridge contract"] },
+  "auth": { "type": ["Android runtime permission", "planned device-bound credential", "app-specific password for optional CalDAV"], "notes": "The committed MCP server is mock mode; no production relay or OAuth issuer is included." },
+  "capabilities": { "read": true, "write": true, "confirmation_required": true },
+  "risk": { "level": "high", "destructive_actions": ["create/update/delete event", "sync", "conflict resolution"], "notes": "Delete and conflict resolution must be disabled by default in a real relay." },
+  "tools": ["list_calendars", "list_events", "create_event", "update_event", "delete_event"],
+  "i18n": { "en": { "summary": "An experimental bridge between Android CalendarContract, CalDAV, and MCP.", "description": "A private device-integration implementation with a public blueprint for a permission-aware, device-bound bridge.", "limitations": "The committed MCP server is mock mode; production relays and OAuth issuers are not included." }, "zh": { "summary": "连接 Android CalendarContract、CalDAV 与 MCP 的实验性桥接项目。", "description": "一个私有设备集成实现，并提供具备权限意识和设备绑定特性的公开桥接蓝图。", "limitations": "已提交的 MCP 服务器为模拟模式；不包含生产中继或 OAuth 签发器。" } }
+}
