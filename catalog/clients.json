@@ -21,7 +21,7 @@
         "zh": {
           "account": "Pro 可连接仅含 read/fetch 的自定义 MCP。包含写入操作的完整 MCP 需要 Business、Enterprise 或 Edu，并受工作区管理。",
           "recommended": "部署带 OAuth 的私有 HTTPS MCP；若服务器必须留在私网，可使用 Secure MCP Tunnel。",
-          "limitations": "不要把 Plus 当作个人自建 MCP 的可靠前提：专门的 Developer Mode 要求没有明确列出 Plus。自定义应用从网页端添加，Agent mode 不会调用。"
+          "limitations": "不要默认 Plus 就支持个人自建 MCP：官方文档并未写明 Plus 具备专用 Developer Mode。自定义应用需在网页端添加，Agent 模式不会调用该类应用。"
         }
       }
     },
@@ -44,9 +44,9 @@
           "limitations": "The consumer qwen.ai web chat does not document the same arbitrary MCP URL flow as Qwen Code."
         },
         "zh": {
-          "account": "启用 MCP 本身不需要高级客户端套餐，但模型仍需 Coding Plan 或 API 提供商；Qwen OAuth 免费层已于 2026-04-15 结束。",
+          "account": "启用 MCP 本身不需要高级客户端套餐，但使用模型仍需要 Coding Plan 或者对接对应 API 服务商；Qwen OAuth 免费层已于 2026-04-15 结束。",
           "recommended": "本地服务器使用 stdio，托管服务器使用 Streamable HTTP，并通过 qwen mcp add 或 settings.json 配置。",
-          "limitations": "普通 qwen.ai 网页聊天没有与 Qwen Code 同等明确的任意 MCP URL 添加流程。"
+          "limitations": "普通 qwen.ai 网页对话，不具备 Qwen Code 那样直接添加任意 MCP URL 的能力。"
         }
       }
     },
@@ -66,7 +66,7 @@
           "limitations": "Built-in or partner MCP availability in a product does not prove that arbitrary custom servers can be added."
         },
         "zh": {
-          "account": "目前没有明确公开的普通账号添加任意自建 MCP URL 流程。",
+          "account": "目前官方没有公开普通账号添加任意自建 MCP URL 的功能流程。",
           "recommended": "开发客户端优先使用 TRAE；使用豆包模型的托管智能体可考虑扣子或火山引擎产品。",
           "limitations": "产品内置或合作方 MCP 可用，不代表用户可以添加任意自定义服务器。"
         }
@@ -90,7 +90,7 @@
           "limitations": "Recheck the current client UI and quota before setup because product availability can change."
         },
         "zh": {
-          "account": "可以从市场选择或手动添加 MCP Server；模型额度、地区和客户端可用性是另外的条件。",
+          "account": "可以从市场选择或手动添加 MCP Server；但模型额度、服务地区、客户端可用性为独立约束条件。",
           "recommended": "需要手动连接开发者自建 MCP 时，优先使用 TRAE，而不是普通豆包聊天应用。",
           "limitations": "产品可用性可能变化，配置前应重新核对当前客户端界面和额度。"
         }
@@ -141,7 +141,7 @@
         "zh": {
           "account": "Claude Desktop 免费用户可使用本地桌面扩展；远程自定义连接器需要 Pro、Max、Team 或 Enterprise。",
           "recommended": "本地访问使用桌面扩展，远程访问则在 Settings > Connectors 中添加连接器 URL。",
-          "limitations": "Team 和 Enterprise 需要 Owner 或 Primary Owner 先添加组织连接器。"
+          "limitations": "Team / Enterprise 版本，需要 Owner 或 Primary Owner 预先添加组织连接器。"
         }
       }
     },
@@ -163,7 +163,7 @@
           "limitations": "Currently English-only and not a general connection path for accounts in Japan, or for work and school accounts."
         },
         "zh": {
-          "account": "需要 Gemini Spark 访问资格、年满 18 岁、个人 Google 账号、开启 Keep Activity，并符合当前美国地区资格。",
+          "account": "需要拥有 Gemini Spark 使用权限、年满 18 周岁、使用个人 Google 账号、开启 Keep Activity，同时满足美国地区可用限制。",
           "recommended": "从 Gemini 网页版 Connected Apps 添加 MCP URL，之后在网页或移动端的 Spark 中使用。",
           "limitations": "目前仅支持英语，不是日本账号或工作、学校账号的通用连接方式。"
         }
