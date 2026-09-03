@@ -6,6 +6,12 @@ export function renderBeginnerGuideContent({ guide, project, locale, sitePath, e
   const routeNav = text.routes.map((route) => `<a class="route-choice" href="#${esc(route.id)}"><span class="route-kicker">${route.id === 'local' ? label('Use on this computer', '在这台电脑上使用') : label('Use on a phone', '在手机上使用')}</span><strong>${esc(route.title)}</strong><span>${esc(route.summary)}</span></a>`).join('');
   const routes = text.routes.map((route) => {
     const promptId = `${embedded ? 'project-' : ''}prompt-${route.id}`;
+    const commandsId = `${embedded ? 'project-' : ''}commands-${route.id}`;
+    const copyLabel = label('Copy', '复制');
+    const codeBox = ({ id, kind, content, className }) => `<div class="code-box">
+      <div class="code-toolbar"><span class="code-kind">${kind}</span><button type="button" class="code-copy" data-copy-target="${id}" aria-label="${copyLabel}"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg><span class="copy-label">${copyLabel}</span></button></div>
+      <pre id="${id}" class="${className}"><code>${esc(content)}</code></pre>
+    </div>`;
     const heading = route.id === 'local'
       ? label('New to the command line? Let an AI set it up', '不熟悉命令行？交给 AI 完成')
       : label('Want to use it from a phone? Let an AI host a private server', '想在手机上使用？让 AI 部署私人服务器');
@@ -18,10 +24,10 @@ export function renderBeginnerGuideContent({ guide, project, locale, sitePath, e
         <div><h3>${label('Possible cost', '可能的费用')}</h3><p>${esc(route.cost)}</p></div>
       </div>
       <h3>${label('What will happen', '操作步骤')}</h3>${ordered(route.steps)}
-      <div class="prompt-heading"><div><h3>${label('Copy this entire request into a coding AI', '把下面整段请求复制给编程 AI')}</h3><p>${label('The AI should perform the setup and prove the result, not stop after giving you a tutorial.', 'AI 应直接执行配置并验证结果，而不是只给你一份教程。')}</p></div><button type="button" class="copy-button" data-copy-target="${promptId}">${label('Copy the full request', '复制整段请求')}</button></div>
-      <pre id="${promptId}" class="prompt"><code>${esc(route.prompt)}</code></pre>
+      <div class="prompt-heading"><div><h3>${label('Copy this entire request into a coding AI', '把下面整段请求复制给编程 AI')}</h3><p>${label('The AI should perform the setup and prove the result, not stop after giving you a tutorial.', 'AI 应直接执行配置并验证结果，而不是只给你一份教程。')}</p></div></div>
+      ${codeBox({id:promptId,kind:label('Setup request','配置请求'),content:route.prompt,className:'prompt'})}
       <h3>${esc(route.manualTitle)}</h3><p>${esc(route.manualIntro)}</p>
-      <pre class="commands"><code>${esc(route.commands.join('\n'))}</code></pre>
+      ${codeBox({id:commandsId,kind:label('Terminal','终端'),content:route.commands.join('\n'),className:'commands'})}
       <div class="two-column checklist-grid">
         <div><h3>${label('Do not call it complete until', '满足以下条件才算完成')}</h3>${list(route.success)}</div>
         <div><h3>${label('If something looks wrong', '出现问题时')}</h3>${list(route.troubleshooting)}</div>
@@ -44,7 +50,7 @@ export function renderBeginnerGuideContent({ guide, project, locale, sitePath, e
     <section class="safety"><h2>${esc(text.safetyTitle)}</h2>${list(text.safety)}</section>
     <section><h2>${label('Check whether your AI client supports it', '确认 AI 客户端是否支持')}</h2><p>${label('Plans, regions, and supported connection types change. Check the dated compatibility table before paying or deploying.', '套餐、地区和支持的连接方式会变化。付费或部署前，请查看带核对日期的兼容性表。')}</p><p><a class="button-link" href="${sitePath(`/${locale}/clients/`)}">${label('Open the MCP client table', '查看 MCP 客户端兼容性表')}</a></p></section>
   </${embedded ? 'div' : 'article'}>
-  <script>document.querySelectorAll('[data-copy-target]').forEach((button)=>button.addEventListener('click',async()=>{const target=document.getElementById(button.dataset.copyTarget);if(!target)return;const original=button.textContent;try{await navigator.clipboard.writeText(target.textContent);button.textContent=${JSON.stringify(label('Copied', '已复制'))};}catch{const range=document.createRange();range.selectNodeContents(target);const selection=getSelection();selection.removeAllRanges();selection.addRange(range);button.textContent=${JSON.stringify(label('Selected — copy manually', '已选中，请手动复制'))};}setTimeout(()=>button.textContent=original,2200);}));</script>`;
+  <script>document.querySelectorAll('[data-copy-target]').forEach((button)=>button.addEventListener('click',async()=>{const target=document.getElementById(button.dataset.copyTarget);if(!target)return;const output=button.querySelector('.copy-label')||button;const original=output.textContent;try{await navigator.clipboard.writeText(target.textContent);output.textContent=${JSON.stringify(label('Copied', '已复制'))};}catch{const range=document.createRange();range.selectNodeContents(target);const selection=getSelection();selection.removeAllRanges();selection.addRange(range);output.textContent=${JSON.stringify(label('Selected', '已选中'))};}setTimeout(()=>output.textContent=original,1800);}));</script>`;
 }
 
 export function renderBeginnerGuide({ guide, project, locale, sitePath, layout, esc, repoUrl }) {

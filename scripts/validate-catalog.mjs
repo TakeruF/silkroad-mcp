@@ -78,7 +78,7 @@ if (!Array.isArray(clientCatalog.clients) || !clientCatalog.clients.length) {
     if (!writeModes.has(client.writeTools)) fail('invalid writeTools');
     if (!Array.isArray(client.officialUrls) || client.officialUrls.some((url) => !/^https:\/\//.test(url))) fail('officialUrls must contain HTTPS URLs');
     for (const locale of ['en', 'zh']) {
-      for (const key of ['account', 'recommended', 'limitations']) {
+      for (const key of ['name', 'account', 'recommended', 'limitations']) {
         if (typeof client.i18n?.[locale]?.[key] !== 'string' || !client.i18n[locale][key].trim()) fail(`missing i18n.${locale}.${key}`);
       }
     }

@@ -74,7 +74,7 @@
           "needs": ["支持本地 stdio 的桌面 MCP 客户端", "Git", "Node.js 20 或更高版本", "npm 10 或更高版本"],
           "cost": "China Rail MCP 本身免费；AI 客户端或模型提供商可能另外收费。",
           "steps": [
-            "选择支持本地 stdio 的桌面客户端。Qwen Code、TRAE 和 Claude Desktop 都是常见方案；安装前先看客户端指南。",
+            "选择支持本地 stdio 的桌面客户端。千问 Code（Qwen Code）、TRAE 和 Claude Desktop 都是常见方案；安装前先看客户端指南。",
             "把下面的 AI 配置请求完整复制给能够操作终端和文件的编程 AI。",
             "安装缺失软件、重启应用或修改设置时，只在 AI 说明影响后再允许。",
             "不要把“构建通过”当成完成；必须从已配置客户端实际调用 get_provider_status 并查询车次。"
