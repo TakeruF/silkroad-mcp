@@ -1,12 +1,102 @@
 {
-  "name": "China Rail MCP", "id": "china-rail", "category": "public-data", "status": "experimental",
-  "source": { "visibility": "public", "repository": "TakeruF/china-rail-mcp", "blueprint": null },
-  "implementation": { "language": ["TypeScript"], "components": ["MCP server", "public-data provider", "fixture-backed tests"] },
-  "protocol": { "transports": ["stdio", "unauthenticated HTTPS upstream"] },
-  "service": { "official_api": false, "mechanism": ["unauthenticated public 12306 endpoints", "no login or anti-bot bypass"] },
-  "auth": { "type": ["none"], "notes": "No upstream account credentials are used." },
-  "capabilities": { "read": true, "write": false, "confirmation_required": false },
-  "risk": { "level": "medium", "destructive_actions": [], "notes": "Upstream formats and availability can change; no ticket purchase or booking is attempted." },
-  "tools": ["search_stations", "search_trains", "get_train_details", "get_availability", "compare_trains"],
-  "i18n": { "en": { "summary": "Search China Railway stations, trains, fares, and seat availability.", "description": "A public-data MCP server for planning rail journeys without login, booking, or anti-bot bypass.", "limitations": "Upstream public endpoints may change. It never purchases or books tickets." }, "zh": { "summary": "查询中国铁路车站、车次、票价和余票信息。", "description": "面向行程规划的公共数据 MCP 服务器，不需要登录，不提供购票或绕过反爬的功能。", "limitations": "上游公开接口可能变更；本项目不购买或预订车票。" } }
+  "name": "China Rail MCP",
+  "id": "china-rail",
+  "category": "public-data",
+  "status": "experimental",
+  "source": {
+    "visibility": "public",
+    "repository": "TakeruF/china-rail-mcp",
+    "blueprint": null
+  },
+  "implementation": {
+    "language": ["TypeScript"],
+    "components": ["MCP server", "public-data provider", "OAuth-protected remote endpoint", "fixture-backed tests"]
+  },
+  "protocol": {
+    "transports": ["stdio", "Streamable HTTP"]
+  },
+  "service": {
+    "official_api": false,
+    "mechanism": ["unauthenticated public 12306 endpoints", "no login or anti-bot bypass"]
+  },
+  "auth": {
+    "type": ["none (local stdio)", "OAuth 2.1 Authorization Code + PKCE (remote)"],
+    "notes": "No upstream 12306 account credentials are used. Each remote deployment is protected by its operator's private connection secret."
+  },
+  "capabilities": {
+    "read": true,
+    "write": false,
+    "confirmation_required": false
+  },
+  "risk": {
+    "level": "medium",
+    "destructive_actions": [],
+    "notes": "Upstream formats and availability can change; no ticket purchase or booking is attempted."
+  },
+  "tools": ["get_provider_status", "search_stations", "search_trains", "get_train_details", "get_availability", "compare_trains"],
+  "media": [
+    {
+      "id": "chatgpt-without-mcp",
+      "kind": "comparison",
+      "commit": "d352fb746b807c06c4ae2d1a68e6e25e91448e8d",
+      "path": "docs/images/chatgpt-without-mcp.jpg",
+      "capturedAt": "2026-09-03",
+      "i18n": {
+        "en": {
+          "alt": "ChatGPT without China Rail MCP asks the user to verify the result in 12306",
+          "caption": "Without China Rail MCP, ChatGPT could not reliably retrieve the complete evening train list or current seat availability."
+        },
+        "zh": {
+          "alt": "未接入 China Rail MCP 的 ChatGPT 建议用户前往 12306 核对",
+          "caption": "未接入 China Rail MCP 时，ChatGPT 无法可靠取得晚间完整车次和当前余票。"
+        }
+      }
+    },
+    {
+      "id": "chatgpt-with-mcp",
+      "kind": "comparison",
+      "commit": "d352fb746b807c06c4ae2d1a68e6e25e91448e8d",
+      "path": "docs/images/chatgpt-with-mcp.jpg",
+      "capturedAt": "2026-09-03",
+      "i18n": {
+        "en": {
+          "alt": "ChatGPT with China Rail MCP lists trains with times, fares, and seat availability",
+          "caption": "With China Rail MCP connected, the same question returned trains, times, reference fares, and seat availability."
+        },
+        "zh": {
+          "alt": "接入 China Rail MCP 的 ChatGPT 列出车次、时刻、票价和余票",
+          "caption": "接入 China Rail MCP 后，同一问题可返回车次、时刻、参考票价和余票。"
+        }
+      }
+    },
+    {
+      "id": "12306-reference",
+      "kind": "source-evidence",
+      "commit": "d352fb746b807c06c4ae2d1a68e6e25e91448e8d",
+      "path": "docs/images/12306-reference.jpg",
+      "capturedAt": "2026-09-03",
+      "i18n": {
+        "en": {
+          "alt": "12306 app showing the same Guangzhou South to Changsha South train search",
+          "caption": "The 12306 app was checked at the same time as a point-in-time reference for representative train numbers, times, and starting fares."
+        },
+        "zh": {
+          "alt": "12306 App 显示同一次广州南到长沙南查询",
+          "caption": "同一时刻使用 12306 App 核对代表性车次、时刻和起始票价，作为当次查询的参考。"
+        }
+      }
+    }
+  ],
+  "i18n": {
+    "en": {
+      "summary": "Search China Railway stations, trains, fares, and seat availability.",
+      "description": "A public-data MCP server for planning rail journeys without login, booking, or anti-bot bypass.",
+      "limitations": "Upstream public endpoints may change. It never purchases or books tickets."
+    },
+    "zh": {
+      "summary": "查询中国铁路车站、车次、票价和余票信息。",
+      "description": "面向行程规划的公共数据 MCP 服务器，不需要登录，不提供购票或绕过反爬的功能。",
+      "limitations": "上游公开接口可能变更；本项目不购买或预订车票。"
+    }
+  }
 }

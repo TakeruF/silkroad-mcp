@@ -27,10 +27,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run check:media
       - run: npm run build
         env:
           SITE_BASE: /silkroad-mcp
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: site/dist
       - id: deployment

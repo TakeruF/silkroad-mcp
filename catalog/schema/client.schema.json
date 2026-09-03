@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Silkroad MCP client compatibility catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["checkedAt", "clients"],
+  "properties": {
+    "checkedAt": { "type": "string", "format": "date" },
+    "clients": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/client" }
+    }
+  },
+  "$defs": {
+    "client": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "supportStatus", "transports", "localStdio", "remoteMcp", "writeTools", "officialUrls", "i18n"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "name": { "type": "string", "minLength": 1 },
+        "supportStatus": { "enum": ["supported", "supported-with-plan", "not-documented", "limited-preview"] },
+        "transports": { "type": "array", "items": { "type": "string" } },
+        "localStdio": { "type": ["boolean", "null"] },
+        "remoteMcp": { "type": ["boolean", "null"] },
+        "writeTools": { "enum": ["supported", "workspace-only", "confirmation-required", "not-documented"] },
+        "officialUrls": { "type": "array", "items": { "type": "string", "format": "uri" } },
+        "i18n": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["en", "zh"],
+          "properties": {
+            "en": { "$ref": "#/$defs/localized" },
+            "zh": { "$ref": "#/$defs/localized" }
+          }
+        }
+      }
+    },
+    "localized": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["account", "recommended", "limitations"],
+      "properties": {
+        "account": { "type": "string", "minLength": 1 },
+        "recommended": { "type": "string", "minLength": 1 },
+        "limitations": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

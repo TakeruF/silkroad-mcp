@@ -17,9 +17,12 @@
     "capabilities": { "type": "object", "additionalProperties": false, "required": ["read", "write", "confirmation_required"], "properties": { "read": { "type": "boolean" }, "write": { "type": "boolean" }, "confirmation_required": { "type": "boolean" } } },
     "risk": { "type": "object", "additionalProperties": false, "required": ["level", "destructive_actions", "notes"], "properties": { "level": { "enum": ["low", "medium", "high"] }, "destructive_actions": { "type": "array", "items": { "type": "string" } }, "notes": { "type": "string" } } }
     ,"tools": { "type": "array", "items": { "type": "string" } },
+    "media": { "type": "array", "items": { "$ref": "#/$defs/media" } },
     "i18n": { "type": "object", "additionalProperties": false, "required": ["en", "zh"], "properties": { "en": { "$ref": "#/$defs/localized" }, "zh": { "$ref": "#/$defs/localized" } } }
   },
   "$defs": {
-    "localized": { "type": "object", "additionalProperties": false, "required": ["summary", "description", "limitations"], "properties": { "summary": { "type": "string", "minLength": 1 }, "description": { "type": "string", "minLength": 1 }, "limitations": { "type": "string", "minLength": 1 } } }
+    "localized": { "type": "object", "additionalProperties": false, "required": ["summary", "description", "limitations"], "properties": { "summary": { "type": "string", "minLength": 1 }, "description": { "type": "string", "minLength": 1 }, "limitations": { "type": "string", "minLength": 1 } } },
+    "media": { "type": "object", "additionalProperties": false, "required": ["id", "kind", "commit", "path", "capturedAt", "i18n"], "properties": { "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }, "kind": { "enum": ["comparison", "source-evidence", "interface"] }, "commit": { "type": "string", "pattern": "^[a-f0-9]{40}$" }, "path": { "type": "string", "minLength": 1 }, "capturedAt": { "type": "string", "format": "date" }, "i18n": { "type": "object", "additionalProperties": false, "required": ["en", "zh"], "properties": { "en": { "$ref": "#/$defs/mediaLocalized" }, "zh": { "$ref": "#/$defs/mediaLocalized" } } } } },
+    "mediaLocalized": { "type": "object", "additionalProperties": false, "required": ["alt", "caption"], "properties": { "alt": { "type": "string", "minLength": 1 }, "caption": { "type": "string", "minLength": 1 } } }
   }
 }

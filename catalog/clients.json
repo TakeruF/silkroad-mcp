@@ -1,0 +1,173 @@
+{
+  "checkedAt": "2026-09-03",
+  "clients": [
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "supportStatus": "supported-with-plan",
+      "transports": ["Streamable HTTP", "Secure MCP Tunnel"],
+      "localStdio": false,
+      "remoteMcp": true,
+      "writeTools": "workspace-only",
+      "officialUrls": [
+        "https://help.openai.com/en/articles/12584461-developer-mode-and-full-mcp-connectors-in-chatgpt-beta"
+      ],
+      "i18n": {
+        "en": {
+          "account": "Pro supports custom read/fetch MCP connections. Full MCP, including write actions, requires Business, Enterprise, or Edu and workspace administration.",
+          "recommended": "Deploy a private HTTPS MCP with OAuth. Use Secure MCP Tunnel when the server must remain on a private network.",
+          "limitations": "Do not rely on Plus for an individually developed MCP: the dedicated Developer Mode requirements do not clearly list it. Custom apps are added on the web; Agent mode does not use them."
+        },
+        "zh": {
+          "account": "Pro 可连接仅含 read/fetch 的自定义 MCP。包含写入操作的完整 MCP 需要 Business、Enterprise 或 Edu，并受工作区管理。",
+          "recommended": "部署带 OAuth 的私有 HTTPS MCP；若服务器必须留在私网，可使用 Secure MCP Tunnel。",
+          "limitations": "不要把 Plus 当作个人自建 MCP 的可靠前提：专门的 Developer Mode 要求没有明确列出 Plus。自定义应用从网页端添加，Agent mode 不会调用。"
+        }
+      }
+    },
+    {
+      "id": "qwen-code",
+      "name": "Qwen Code",
+      "supportStatus": "supported",
+      "transports": ["stdio", "Streamable HTTP", "SSE"],
+      "localStdio": true,
+      "remoteMcp": true,
+      "writeTools": "supported",
+      "officialUrls": [
+        "https://qwenlm.github.io/qwen-code-docs/en/users/features/mcp/",
+        "https://qwenlm.github.io/qwen-code-docs/en/users/configuration/auth/"
+      ],
+      "i18n": {
+        "en": {
+          "account": "MCP itself needs no premium client tier. Model access still requires a Coding Plan or API provider; the free Qwen OAuth tier ended on April 15, 2026.",
+          "recommended": "Use stdio for a local server or Streamable HTTP for a hosted server, configured with qwen mcp add or settings.json.",
+          "limitations": "The consumer qwen.ai web chat does not document the same arbitrary MCP URL flow as Qwen Code."
+        },
+        "zh": {
+          "account": "启用 MCP 本身不需要高级客户端套餐，但模型仍需 Coding Plan 或 API 提供商；Qwen OAuth 免费层已于 2026-04-15 结束。",
+          "recommended": "本地服务器使用 stdio，托管服务器使用 Streamable HTTP，并通过 qwen mcp add 或 settings.json 配置。",
+          "limitations": "普通 qwen.ai 网页聊天没有与 Qwen Code 同等明确的任意 MCP URL 添加流程。"
+        }
+      }
+    },
+    {
+      "id": "doubao-chat",
+      "name": "Doubao chat",
+      "supportStatus": "not-documented",
+      "transports": [],
+      "localStdio": null,
+      "remoteMcp": null,
+      "writeTools": "not-documented",
+      "officialUrls": [],
+      "i18n": {
+        "en": {
+          "account": "No general account path for adding an arbitrary self-hosted MCP URL is currently documented.",
+          "recommended": "Use TRAE for a developer client, or Coze and Volcengine products for a hosted agent using Doubao models.",
+          "limitations": "Built-in or partner MCP availability in a product does not prove that arbitrary custom servers can be added."
+        },
+        "zh": {
+          "account": "目前没有明确公开的普通账号添加任意自建 MCP URL 流程。",
+          "recommended": "开发客户端优先使用 TRAE；使用豆包模型的托管智能体可考虑扣子或火山引擎产品。",
+          "limitations": "产品内置或合作方 MCP 可用，不代表用户可以添加任意自定义服务器。"
+        }
+      }
+    },
+    {
+      "id": "trae",
+      "name": "TRAE",
+      "supportStatus": "supported",
+      "transports": ["stdio", "remote MCP"],
+      "localStdio": true,
+      "remoteMcp": true,
+      "writeTools": "supported",
+      "officialUrls": [
+        "https://developer.volcengine.com/articles/7497876519193165875"
+      ],
+      "i18n": {
+        "en": {
+          "account": "MCP servers can be selected from the marketplace or added manually. Model quota, region, and client availability remain separate conditions.",
+          "recommended": "Use TRAE instead of the consumer Doubao chat app when manually connecting a developer-owned MCP server.",
+          "limitations": "Recheck the current client UI and quota before setup because product availability can change."
+        },
+        "zh": {
+          "account": "可以从市场选择或手动添加 MCP Server；模型额度、地区和客户端可用性是另外的条件。",
+          "recommended": "需要手动连接开发者自建 MCP 时，优先使用 TRAE，而不是普通豆包聊天应用。",
+          "limitations": "产品可用性可能变化，配置前应重新核对当前客户端界面和额度。"
+        }
+      }
+    },
+    {
+      "id": "coze",
+      "name": "Coze",
+      "supportStatus": "supported",
+      "transports": ["HTTPS MCP"],
+      "localStdio": false,
+      "remoteMcp": true,
+      "writeTools": "supported",
+      "officialUrls": [
+        "https://docs.coze.cn/guides_create_a_plugin_based_on_mcp"
+      ],
+      "i18n": {
+        "en": {
+          "account": "Creating an MCP-based plugin is free; hosting, model, and third-party service usage can still cost money. Private-network connections are an enterprise-tier feature.",
+          "recommended": "Provide an HTTPS hostname, choose no auth, service token/API key, or OAuth, then test and publish the plugin before using it in an agent or workflow.",
+          "limitations": "A bare IP address is not accepted as the plugin URL. Workspace administrators can restrict feature and resource visibility."
+        },
+        "zh": {
+          "account": "创建基于 MCP 的插件本身免费，但托管、模型和第三方服务仍可能收费；私网连接属于企业级功能。",
+          "recommended": "提供 HTTPS 域名，选择无认证、Service Token/API key 或 OAuth，试运行并发布后再用于智能体或工作流。",
+          "limitations": "插件 URL 不接受裸 IP；工作区管理员可以限制功能和资源可见性。"
+        }
+      }
+    },
+    {
+      "id": "claude",
+      "name": "Claude",
+      "supportStatus": "supported-with-plan",
+      "transports": ["desktop extension", "Streamable HTTP", "SSE"],
+      "localStdio": true,
+      "remoteMcp": true,
+      "writeTools": "supported",
+      "officialUrls": [
+        "https://support.anthropic.com/en/articles/11175166-about-custom-integrations-using-remote-mcp",
+        "https://support.anthropic.com/en/articles/11725091-when-to-use-desktop-and-web-connectors"
+      ],
+      "i18n": {
+        "en": {
+          "account": "Local desktop extensions are available to free Claude Desktop users. Remote custom connectors require Pro, Max, Team, or Enterprise.",
+          "recommended": "Use a desktop extension for local access or add a remote connector URL in Settings > Connectors.",
+          "limitations": "On Team and Enterprise, an Owner or Primary Owner must first add the organization connector."
+        },
+        "zh": {
+          "account": "Claude Desktop 免费用户可使用本地桌面扩展；远程自定义连接器需要 Pro、Max、Team 或 Enterprise。",
+          "recommended": "本地访问使用桌面扩展，远程访问则在 Settings > Connectors 中添加连接器 URL。",
+          "limitations": "Team 和 Enterprise 需要 Owner 或 Primary Owner 先添加组织连接器。"
+        }
+      }
+    },
+    {
+      "id": "gemini-spark",
+      "name": "Gemini Spark",
+      "supportStatus": "limited-preview",
+      "transports": ["remote MCP"],
+      "localStdio": false,
+      "remoteMcp": true,
+      "writeTools": "confirmation-required",
+      "officialUrls": [
+        "https://support.google.com/gemini/answer/17209137"
+      ],
+      "i18n": {
+        "en": {
+          "account": "Requires Gemini Spark access, age 18 or over, a personal Google Account, Keep Activity enabled, and current eligibility in the United States.",
+          "recommended": "Add the MCP URL from Gemini web Connected Apps, then use the connection in Spark on web or mobile.",
+          "limitations": "Currently English-only and not a general connection path for accounts in Japan, or for work and school accounts."
+        },
+        "zh": {
+          "account": "需要 Gemini Spark 访问资格、年满 18 岁、个人 Google 账号、开启 Keep Activity，并符合当前美国地区资格。",
+          "recommended": "从 Gemini 网页版 Connected Apps 添加 MCP URL，之后在网页或移动端的 Spark 中使用。",
+          "limitations": "目前仅支持英语，不是日本账号或工作、学校账号的通用连接方式。"
+        }
+      }
+    }
+  ]
+}

@@ -9,6 +9,7 @@
     "build": "npm run validate:catalog && npm run generate",
     "check:generated": "npm run generate && git diff --exit-code -- README.md",
     "check:links": "node scripts/check-links.mjs",
+    "check:media": "node scripts/check-media.mjs",
     "check:secrets": "node scripts/check-secrets.mjs",
     "test": "npm run build && npm run check:links && npm run check:secrets"
   },
