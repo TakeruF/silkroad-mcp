@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Silkroad MCP beginner guide",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "projectId", "updatedAt", "sourceCommit", "i18n"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "projectId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "updatedAt": { "type": "string", "format": "date" },
+    "sourceCommit": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+    "i18n": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "zh"],
+      "properties": {
+        "en": { "$ref": "#/$defs/localizedGuide" },
+        "zh": { "$ref": "#/$defs/localizedGuide" }
+      }
+    }
+  },
+  "$defs": {
+    "stringList": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "summary", "bestFor", "needs", "cost", "steps", "prompt", "manualTitle", "manualIntro", "commands", "success", "troubleshooting"],
+      "properties": {
+        "id": { "enum": ["local", "remote"] },
+        "title": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string", "minLength": 1 },
+        "bestFor": { "type": "string", "minLength": 1 },
+        "needs": { "$ref": "#/$defs/stringList" },
+        "cost": { "type": "string", "minLength": 1 },
+        "steps": { "$ref": "#/$defs/stringList" },
+        "prompt": { "type": "string", "minLength": 100 },
+        "manualTitle": { "type": "string", "minLength": 1 },
+        "manualIntro": { "type": "string", "minLength": 1 },
+        "commands": { "$ref": "#/$defs/stringList" },
+        "success": { "$ref": "#/$defs/stringList" },
+        "troubleshooting": { "$ref": "#/$defs/stringList" }
+      }
+    },
+    "localizedGuide": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "intro", "startTitle", "startIntro", "routes", "safetyTitle", "safety", "glossaryTitle", "glossary"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "intro": { "type": "string", "minLength": 1 },
+        "startTitle": { "type": "string", "minLength": 1 },
+        "startIntro": { "type": "string", "minLength": 1 },
+        "routes": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "$ref": "#/$defs/route" } },
+        "safetyTitle": { "type": "string", "minLength": 1 },
+        "safety": { "$ref": "#/$defs/stringList" },
+        "glossaryTitle": { "type": "string", "minLength": 1 },
+        "glossary": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["term", "definition"],
+            "properties": {
+              "term": { "type": "string", "minLength": 1 },
+              "definition": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import path from 'node:path';
 
 const root = new URL('..', import.meta.url);
 const records = path.join(root.pathname, 'catalog/projects');
+const guideRecords = path.join(root.pathname, 'catalog/guides');
 const clientCatalog = JSON.parse(await readFile(path.join(root.pathname, 'catalog/clients.json'), 'utf8'));
 const required = ['name', 'id', 'category', 'status', 'source', 'implementation', 'protocol', 'service', 'auth', 'capabilities', 'risk', 'tools', 'i18n'];
 const allowedCategories = new Set(['mail', 'public-data', 'device-bridge']);
@@ -83,5 +84,35 @@ if (!Array.isArray(clientCatalog.clients) || !clientCatalog.clients.length) {
     }
   }
 }
+const guideIds = new Set();
+for (const file of (await readdir(guideRecords)).filter((name) => name.endsWith('.json'))) {
+  const guide = JSON.parse(await readFile(path.join(guideRecords, file), 'utf8'));
+  const fail = (message) => { failures++; console.error(`${file}: ${message}`); };
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(guide.id ?? '')) fail('invalid guide id');
+  if (guideIds.has(guide.id)) fail(`duplicate guide id ${guide.id}`); guideIds.add(guide.id);
+  if (!ids.has(guide.projectId)) fail('projectId does not reference a catalog project');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(guide.updatedAt ?? '')) fail('updatedAt must be an ISO date');
+  if (!/^[a-f0-9]{40}$/.test(guide.sourceCommit ?? '')) fail('sourceCommit must be a full Git commit');
+  for (const locale of ['en', 'zh']) {
+    const localized = guide.i18n?.[locale];
+    for (const key of ['title', 'intro', 'startTitle', 'startIntro', 'safetyTitle', 'glossaryTitle']) {
+      if (typeof localized?.[key] !== 'string' || !localized[key].trim()) fail(`missing i18n.${locale}.${key}`);
+    }
+    if (!Array.isArray(localized?.routes) || localized.routes.length !== 2) fail(`i18n.${locale}.routes must contain local and remote`);
+    else {
+      const routeIds = new Set(localized.routes.map((route) => route.id));
+      if (!routeIds.has('local') || !routeIds.has('remote')) fail(`i18n.${locale}.routes must contain local and remote`);
+      for (const route of localized.routes) {
+        for (const key of ['title', 'summary', 'bestFor', 'cost', 'prompt', 'manualTitle', 'manualIntro']) {
+          if (typeof route[key] !== 'string' || !route[key].trim()) fail(`missing i18n.${locale}.routes.${route.id}.${key}`);
+        }
+        for (const key of ['needs', 'steps', 'commands', 'success', 'troubleshooting']) {
+          if (!Array.isArray(route[key]) || !route[key].length || route[key].some((item) => typeof item !== 'string' || !item.trim())) fail(`invalid i18n.${locale}.routes.${route.id}.${key}`);
+        }
+      }
+    }
+    for (const key of ['safety', 'glossary']) if (!Array.isArray(localized?.[key]) || !localized[key].length) fail(`invalid i18n.${locale}.${key}`);
+  }
+}
 if (failures) process.exit(1);
-console.log(`Catalog valid: ${ids.size} project records and ${clientIds.size} client records.`);
+console.log(`Catalog valid: ${ids.size} project records, ${clientIds.size} client records, and ${guideIds.size} beginner guides.`);

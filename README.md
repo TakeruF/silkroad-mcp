@@ -24,12 +24,18 @@ Statuses describe the currently inspected repositories, not a service-level guar
 ## Repository layout
 
 - [`catalog/`](catalog/) — validated project metadata.
+- [`catalog/guides/`](catalog/guides/) — bilingual beginner walkthroughs rendered on GitHub Pages.
 - [`blueprints/`](blueprints/) — public, provider-neutral designs extracted without production code or secrets.
 - [`packages/`](packages/) — code only when two or more projects genuinely share it. `mail-core` is currently an evaluation boundary, not a runtime dependency.
 - [`templates/`](templates/) — starting points for stdio MCPs, remote MCPs, and device bridges.
 - [`docs/`](docs/) — architecture, publishing, security, and project status policy.
 
 ## Getting started
+
+If you are new to MCP, begin with the published
+[China Rail setup walkthrough](https://takeruf.github.io/silkroad-mcp/en/guides/china-rail/).
+It separates local-computer and phone setup, includes copyable AI requests, and defines what must
+be verified before calling the setup complete.
 
 ```bash
 npm test
