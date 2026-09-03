@@ -1,3 +1,5 @@
+import { lucide } from './lucide.mjs';
+
 export function renderBeginnerGuideContent({ guide, project, locale, sitePath, esc, repoUrl, embedded = false }) {
   const text = guide.i18n[locale];
   const label = (en, zh) => locale === 'zh' ? zh : en;
@@ -9,7 +11,7 @@ export function renderBeginnerGuideContent({ guide, project, locale, sitePath, e
     const commandsId = `${embedded ? 'project-' : ''}commands-${route.id}`;
     const copyLabel = label('Copy', '复制');
     const codeBox = ({ id, kind, content, className }) => `<div class="code-box">
-      <div class="code-toolbar"><span class="code-kind">${kind}</span><button type="button" class="code-copy" data-copy-target="${id}" aria-label="${copyLabel}"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="11" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg><span class="copy-label">${copyLabel}</span></button></div>
+      <div class="code-toolbar"><span class="code-kind">${kind}</span><button type="button" class="code-copy" data-copy-target="${id}" aria-label="${copyLabel}">${lucide('copy')}<span class="copy-label">${copyLabel}</span></button></div>
       <pre id="${id}" class="${className}"><code>${esc(content)}</code></pre>
     </div>`;
     const heading = route.id === 'local'
@@ -32,7 +34,7 @@ export function renderBeginnerGuideContent({ guide, project, locale, sitePath, e
         <div><h3>${label('Do not call it complete until', '满足以下条件才算完成')}</h3>${list(route.success)}</div>
         <div><h3>${label('If something looks wrong', '出现问题时')}</h3>${list(route.troubleshooting)}</div>
       </div>
-      <p><a href="${repoUrl(project.source.repository)}#readme">${label('Open the implementation README for exact project details', '打开实现仓库 README 查看准确项目细节')} →</a></p>
+      <p><a href="${repoUrl(project.source.repository)}#readme">${label('Open the implementation README for exact project details', '打开实现仓库 README 查看准确项目细节')}&nbsp;${lucide('arrow-right','icon-inline')}</a></p>
     </section>`;
   }).join('');
   const glossary = text.glossary.map((item) => `<div class="term"><dt>${esc(item.term)}</dt><dd>${esc(item.definition)}</dd></div>`).join('');
