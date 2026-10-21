@@ -1,7 +1,10 @@
 name: Validate hub
 
 on:
+  # No path filter: Markdown here is validated (generated README, link and
+  # secret checks), so docs changes need this workflow too.
   push:
+    branches: [main]
   pull_request:
 
 permissions:
